@@ -3,9 +3,9 @@
 ### Pour cloner le projet : 
 ...
 git clone https://github.com/RoxBibopp/CorrectionBugVue.git
-
-### Pour cloner le projet : 
 ...
+### Pour cloner le projet : 
+
 créer ensuite une branche avec votre nom, avec la commande ''git checkout-b votrePrenom''
 En prenant soin de remplacer ''votrePrenom'' par votre prénom.
 

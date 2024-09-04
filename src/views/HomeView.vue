@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+//coucou
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';

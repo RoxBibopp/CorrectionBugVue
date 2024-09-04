@@ -6,7 +6,7 @@ git clone https://github.com/RoxBibopp/CorrectionBugVue.git
 ```
 ### Changer de branche : 
 
-créer ensuite une branche avec votre nom, avec la commande ''git checkout-b votrePrenom''
+Créer ensuite une branche avec votre nom, avec la commande ''git checkout -b votrePrenom''
 En prenant soin de remplacer ''votrePrenom'' par votre prénom.
 
 ### Pour installer toutes les dépendances du projet : 

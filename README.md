@@ -1,6 +1,15 @@
 # Appli vue JS Bug
 
-## Pour installer toutes les dépendances du projet : 
+### Pour cloner le projet : 
+...
+git clone https://github.com/RoxBibopp/CorrectionBugVue.git
+
+### Pour cloner le projet : 
+...
+créer ensuite une branche avec votre nom, avec la commande ''git checkout-b votrePrenom''
+En prenant soin de remplacer ''votrePrenom'' par votre prénom.
+
+### Pour installer toutes les dépendances du projet : 
 ```
 npm install
 ```

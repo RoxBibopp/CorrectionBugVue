@@ -1,10 +1,10 @@
 # Appli vue JS Bug
 
 ### Pour cloner le projet : 
-...
+```
 git clone https://github.com/RoxBibopp/CorrectionBugVue.git
-...
-### Pour cloner le projet : 
+```
+### Changer de branche : 
 
 créer ensuite une branche avec votre nom, avec la commande ''git checkout-b votrePrenom''
 En prenant soin de remplacer ''votrePrenom'' par votre prénom.

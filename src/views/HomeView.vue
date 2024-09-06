@@ -22,24 +22,28 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import WeatherCard from '@/WeatherCard.vue';
+import WeatherCard from '@/components/WeatherCard.vue';
 import type { Weather } from '@/types/config';
 
 const router = useRouter();
 const store = useStore();
 const city = ref<string>('');
-
+ const icon = ref<string>('');
+  const temperature = ref<number>(0);
+  const description = ref<string>('');
 const search = () : void => {
   if (city.value.trim() !== '') {
     store.dispatch('fetchWeather', city.value);
     router.push('/weather');
+    store.dispatch('fetchDefaultWeathers')
   }
 };
-
+search()
 const defaultWeathers =  store.getters.defaultWeathers as Weather[];
-onMounted(() => {
-  store.dispatch('fetchDefaultWeathers')
-});
+store.dispatch('fetchWeather', defaultWeathers);
+    router.push('/weather');
+store.dispatch('fetchDefaultWeathers')
+
 </script>
 
 <style scoped>

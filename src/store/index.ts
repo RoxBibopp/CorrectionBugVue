@@ -40,7 +40,7 @@ export default createStore<WeatherState>({
           icon: `https:${data.current.condition.icon}`
         };
         commit('setCity', city);
-        commit('setWeather', data);
+        commit('setWeather', weatherData);
       } catch (error) {
         console.error('Erreur:', error);
         commit('setWeather', null);

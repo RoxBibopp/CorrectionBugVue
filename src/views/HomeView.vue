@@ -8,21 +8,21 @@
     <div class="weather-list">
       <WeatherCard
         v-for="weather in defaultWeathers"
-        :key="city"
-        :city="city"
-        :icon="icon"
-        :temperature="temperature"
-        :description="description"
+        :key="weather.city"
+        :city="weather.city" 
+        :icon="weather.icon"
+        :temperature="weather.temperature"
+        :description="weather.description"
       />
-    </div>
+    </div><!-- ajout de weather. pour afficher les données de weather -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import WeatherCard from '@/WeatherCard.vue';
+import WeatherCard from '@/components/WeatherCard.vue';
 import type { Weather } from '@/types/config';
 
 const router = useRouter();
@@ -36,7 +36,8 @@ const search = () : void => {
   }
 };
 
-const defaultWeathers =  store.getters.defaultWeathers as Weather[];
+const defaultWeathers =  computed(() => store.getters.defaultWeathers as Weather[]); //ajout de computed pour obtenir les données du store
+console.log('defaultWeathers:', defaultWeathers);
 onMounted(() => {
   store.dispatch('fetchDefaultWeathers')
 });

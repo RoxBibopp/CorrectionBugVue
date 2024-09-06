@@ -2,8 +2,8 @@
   <div
     :style="{
       position: 'absolute',
-      top: postIt.x + 'px',
-      left: postIt.y + 'px',
+      top: postIt.y + 'px', // inversion du postIt.x par postIt.y  sinon quand on va en haut le postit va à gauche 
+      left: postIt.x + 'px',
       width: postIt.width + 'px',
       height: postIt.height + 'px',
       backgroundColor: postIt.color,
@@ -76,7 +76,7 @@ const drag = (e: MouseEvent) => {
 };
 
 const stopDrag = () => {
-  isDragging.value = !isDragging.value;
+  isDragging.value = false; // Modification de !isDragging.value par false sinon le postit suit la souris
 };
 
 const startResize = (e: MouseEvent) => {

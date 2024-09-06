@@ -14,45 +14,63 @@
         <div v-for="(day, index) in forecast" :key="index" class="forecast-card">
           <p class="forecast-day">{{ formatDateToDay(day.date) }}</p>
           <p class="forecast-day">{{ day.date }}</p>
-          <img :src="getIconUrl()" alt="Weather Icon" class="forecast-icon" />
+          <img :src="getIconUrl(day.icon)" alt="Weather Icon" class="forecast-icon" />  <!-- :src="getIconUrl(day.icon)" renvoie url complete de l'image meteo -->
           <p class="forecast-temperature">{{ day.temperature }}°C</p>
           <p class="forecast-description">{{ day.description }}</p>
-        </div>
+        </div> 
       </div>
     </div>
 
-    <router-link to="home" class="back-link">Retour</router-link>
+    <router-link to="/" class="back-link">Retour</router-link> <!-- modifier 'home' par ''/ pour revenir au home-->
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import type { StoreState } from '@/types/config';
+import type { StoreState, Weather } from '@/types/config';
+import { useStore } from 'vuex'; //import du Usestore pour faire fonctionner const store
+import { useRouter } from 'vue-router'; // import { useRouter } from 'vue-router pour le router-link home
 
+const router = useRouter();
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
-const weather = computed(() => store.getters.weather);
+const weather = ref<Weather | null>(null); // ref permet de stocker et de mettre à jour
 const forecast = ref<any[]>([]);
 const API_KEY = 'fd08696ce7d247dba7572711243008';
 
 onMounted(async () => {
   if (city.value) {
     await store.dispatch('fetchWeather', city.value);
-    const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
-    const data = await response.json();
-    forecast.value = data.forecast.forecastday.map((day: any) => ({
-      date: day.date,
-      temperature: day.day.avgtemp_c,
-      description: day.day.condition.text,
-      icon: day.day.condition.icon
-    }));
+
+    try {
+      const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
+      const data = await response.json();
+
+      console.log('Weather Data:', data); // Pour déboguer
+
+      weather.value = {
+        city: data.location.name,
+        temperature: data.current.temp_c, // stocker les données de weathersvinformations obtenu de l'Api
+        description: data.current.condition.text,
+        icon: `https:${data.current.condition.icon}`
+      };
+      
+      forecast.value = data.forecast.forecastday.map((day: any) => ({
+        date: day.date,
+        temperature: day.day.avgtemp_c,
+        description: day.day.condition.text,
+        icon: day.day.condition.icon
+      }));
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
   }
 });
 
 const formatDateToDay = (dateString: string): string => {
   const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
   const date = new Date(dateString);
-  return daysOfWeek[date.getDate()];
+  return daysOfWeek[date.getDay()]; // remplacer getDate par getDay pour retrouver le jour
 }
 
 const getIconUrl = (icon?: string): string => {

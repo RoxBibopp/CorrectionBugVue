@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
 
 const props = defineProps<{
   fonts: string[];
@@ -33,6 +33,7 @@ const toggleDropdown = () => {
 };
 
 const selectFont = (font: string) => {
+  // isDropdownOpen.value = false;
   props.onSelectFont(font);
   toggleDropdown();
 };

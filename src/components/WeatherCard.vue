@@ -10,12 +10,15 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 
+
 const props = defineProps({
   city: String,
   icon: String,
   temperature: Number,
   description: String
 });
+
+
 </script>
 
 <style scoped>
@@ -33,4 +36,5 @@ const props = defineProps({
   width: 50px;
   height: 50px;
 }
+
 </style>

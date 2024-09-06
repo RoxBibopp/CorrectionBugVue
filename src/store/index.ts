@@ -8,7 +8,7 @@ export default createStore<WeatherState>({
   state: {
     city: localStorage.getItem('city') || '',
     weather: JSON.parse(localStorage.getItem('weather') || 'null'),
-    defaultWeathers: []
+    defaultWeathers: [] as Weather[], //ajout as Weather[] pour que defaultWeathers: [] est traité comme un tableu d'objet Weather
   },
   mutations: {
     setCity(state, city: string) {

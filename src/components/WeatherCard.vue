@@ -8,6 +8,22 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import type { Weather } from '@/types/config';
+import type { WeatherState } from '@/types/config';
+/*import { defineComponent } from 'vue';
+import { PropType } from 'vue';
+
+export default defineComponent({
+  props{
+    city: String as <City>,
+    icon: String as <Icon>,
+    temperature: Number as <Temperature>,
+    description: String as <Desciption>
+  }
+  
+});*/
+
 import { defineProps } from 'vue';
 
 const props = defineProps({

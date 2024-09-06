@@ -34,10 +34,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import PostItComponent from '@/components/PostIt.vue';
-import ColorPicker from '@/components/ColorPicker.vue';
-import FrontSelector from '@/components/FontSelector.vue';
-import type { PostIt } from '@/types/config';
+import PostItComponent from '../components/PostIt.vue';
+import ColorPicker from '../components/ColorPicker.vue';
+import FontSelector from '../components/FontSelector.vue';
+import type { PostIt } from '../types/config';
 
 const postIts = ref<PostIt[]>([]);
 

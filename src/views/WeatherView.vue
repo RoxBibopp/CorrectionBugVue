@@ -3,9 +3,12 @@
 
     <div v-if="weather" class="current-weather">
       <h2>Météo à {{ city }}</h2>
-      <img :src="weather.icon" alt="Weather Icon" class="weather-icon" />
-      <p class="temperature">Temperature: {{ weather.temperature }}°C</p>
-      <p class="description">{{ weather.description }}</p>
+      <pre>
+        <p> day : {{weather}}</p>
+      </pre>
+      <img :src="weather.current.condition.icon" alt="Weather Icon" class="weather-icon" />
+      <p class="temperature">Temperature: {{ weather.current.temp_c }}°C</p>
+      <p class="description">{{ weather.current.condition.text }}</p>
     </div>
 
     <div v-if="forecast.length" class="forecast">
@@ -14,7 +17,7 @@
         <div v-for="(day, index) in forecast" :key="index" class="forecast-card">
           <p class="forecast-day">{{ formatDateToDay(day.date) }}</p>
           <p class="forecast-day">{{ day.date }}</p>
-          <img :src="getIconUrl()" alt="Weather Icon" class="forecast-icon" />
+          <img :src="getIconUrl(weather.current.condition.icon)" alt="Weather Icon" class="forecast-icon" />
           <p class="forecast-temperature">{{ day.temperature }}°C</p>
           <p class="forecast-description">{{ day.description }}</p>
         </div>
@@ -27,7 +30,10 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import type { StoreState } from '@/types/config';
+import type { StoreState } from '../types/config';
+import { useStore } from 'vuex';
+//import WeatherCard from './../components/WeatherCard.vue';
+
 
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
@@ -58,6 +64,8 @@ const formatDateToDay = (dateString: string): string => {
 const getIconUrl = (icon?: string): string => {
   return `https:${icon}`;
 }
+
+
 </script>
 
 <style>

@@ -40,7 +40,7 @@ export default createStore<WeatherState>({
           icon: `https:${data.current.condition.icon}`
         };
         commit('setCity', city);
-        commit('setWeather', data);
+        commit('setWeather', weatherData);
       } catch (error) {
         console.error('Erreur:', error);
         commit('setWeather', null);
@@ -49,7 +49,7 @@ export default createStore<WeatherState>({
     async fetchDefaultWeathers({ commit }) {
       const defaultCities: string[] = ['Paris', 'London', 'Tokyo', 'New York'];
       try {
-        const weatherPromises :any[] = defaultCities.map(city =>
+        const weatherPromises: any[] = defaultCities.map(city =>
           fetch(`${API_URL}?key=${API_KEY}&q=${city}&aqi=no&lang=fr`).then(response => response.json())
         );
         const data = await Promise.all(weatherPromises);

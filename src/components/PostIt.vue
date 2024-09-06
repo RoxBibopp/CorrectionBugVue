@@ -2,8 +2,8 @@
   <div
     :style="{
       position: 'absolute',
-      top: postIt.x + 'px',
-      left: postIt.y + 'px',
+      top: postIt.y + 'px',
+      left: postIt.x + 'px',
       width: postIt.width + 'px',
       height: postIt.height + 'px',
       backgroundColor: postIt.color,
@@ -63,6 +63,7 @@ const isDragging = ref(false),
 const startDrag = (e: MouseEvent) => {
   isDragging.value = true;
   initialPosition.value = { x: e.clientX - props.postIt.x, y: e.clientY - props.postIt.y };
+
 };
 
 const drag = (e: MouseEvent) => {

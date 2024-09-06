@@ -26,6 +26,7 @@ export default createStore<WeatherState>({
   actions: {
     async fetchWeather({ commit }, city: string) {
       try {
+        commit('setCity', city);
         const response = await fetch(`${API_URL}?key=${API_KEY}&q=${city}&aqi=no&lang=fr`);
         if (!response.ok) {
           throw new Error('Ville non trouvée');
@@ -39,8 +40,6 @@ export default createStore<WeatherState>({
           description: data.current.condition.text,
           icon: `https:${data.current.condition.icon}`
         };
-        commit('setCity', city);
-        console.log("Local storage changé :",localStorage.city);
         commit('setWeather', data);
       } catch (error) {
         console.error('Erreur:', error);

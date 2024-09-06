@@ -38,15 +38,6 @@ const API_KEY = 'fd08696ce7d247dba7572711243008';
 
 onMounted(async () => {
   if (city.value) {
-    /*
-      store dispatch est lancé ici et sur la page précédente
-      en commentant celui de cette page la ville correcte s'affiche
-      mais les prévisions restent sur la ville précédament entrée
-      le local storage est changé sur la page précédente mais ici
-      il contient toujours la valeur précédente
-    */
-    // await store.dispatch('fetchWeather', city.value);   
-    console.log("Local Storage inchangé :",localStorage.city);
     const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
     const data = await response.json();
     

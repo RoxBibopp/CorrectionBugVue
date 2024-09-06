@@ -36,7 +36,7 @@
 import { ref } from 'vue';
 import PostItComponent from '@/components/PostIt.vue';
 import ColorPicker from '@/components/ColorPicker.vue';
-import FrontSelector from '@/components/FontSelector.vue';
+import FontSelector from '@/components/FontSelector.vue';
 import type { PostIt } from '@/types/config';
 
 const postIts = ref<PostIt[]>([]);
@@ -85,8 +85,8 @@ const addPostIt = () => {
 const updatePostIt = (updatedPostIt: PostIt) => {
   const index = postIts.value.findIndex((p) => p.id === updatedPostIt.id);
   if (index !== -1) {
-    postIts.value[index] = updatedPostIt;
-  }
+     postIts.value[index] = updatedPostIt;
+   }
 };
 
 const deletePostIt = (id: number) => {

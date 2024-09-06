@@ -4,7 +4,12 @@
     <img :src="icon" alt="Weather Icon" />
     <p>Temperature: {{ temperature }}°C</p>
     <p>{{ description }}</p>
+    <pre>
+      {{ test }}
+    </pre>
   </div>
+
+
 </template>
 
 <script setup lang="ts">
@@ -14,8 +19,12 @@ const props = defineProps({
   city: String,
   icon: String,
   temperature: Number,
-  description: String
+  description: String,
+  test: Array
 });
+
+
+
 </script>
 
 <style scoped>

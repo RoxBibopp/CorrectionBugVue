@@ -1,13 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import WeatherView from '../views/WeatherView.vue';
 import PostItBoard from '@/views/PostItBoard.vue';
 
-const routes = [
+
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView
+    component: HomeView,
   },
   {
     path: '/weather',

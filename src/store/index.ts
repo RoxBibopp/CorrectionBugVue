@@ -8,7 +8,9 @@ export default createStore<WeatherState>({
   state: {
     city: localStorage.getItem('city') || '',
     weather: JSON.parse(localStorage.getItem('weather') || 'null'),
-    defaultWeathers: []
+    defaultWeathers: JSON.parse(localStorage.getItem('defaultWeather') || 'null')
+
+    
   },
   mutations: {
     setCity(state, city: string) {
@@ -21,6 +23,8 @@ export default createStore<WeatherState>({
     },
     setDefaultWeathers(state, weathers: Weather[]) {
       state.defaultWeathers = weathers;
+      localStorage.setItem('defaultWeather', JSON.stringify(weathers));
+      
     }
   },
   actions: {
@@ -53,12 +57,17 @@ export default createStore<WeatherState>({
           fetch(`${API_URL}?key=${API_KEY}&q=${city}&aqi=no&lang=fr`).then(response => response.json())
         );
         const data = await Promise.all(weatherPromises);
+        
         const weathers: Weather[] = data.map(item => ({
           city: item.location.name,
           temperature: item.current.temp_c,
           description: item.current.condition.text,
           icon: `https:${item.current.condition.icon}`
         }));
+        
+        
+        
+        
         commit('setDefaultWeathers', weathers);
       } catch (error) {
         console.error('Erreur :', error);

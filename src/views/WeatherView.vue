@@ -2,32 +2,35 @@
   <div class="weather-container">
 
     <div v-if="weather" class="current-weather">
-      <h2>Météo à {{ city }}</h2>
-      <img :src="weather.icon" alt="Weather Icon" class="weather-icon" />
-      <p class="temperature">Temperature: {{ weather.temperature }}°C</p>
-      <p class="description">{{ weather.description }}</p>
-    </div>
 
+      <h2>Météo à {{ city }}</h2>
+      <img :src="weather.current.condition.icon" alt="Weather Icon" class="weather-icon" />
+      <p class="temperature">Temperature: {{ weather.current.temp_c }}°C</p>
+      <p class="description">{{ weather.current.condition.text }}</p>
+    </div>
+    
     <div v-if="forecast.length" class="forecast">
       <h3>Prévisions pour les prochains jours</h3>
       <div class="forecast-cards">
-        <div v-for="(day, index) in forecast" :key="index" class="forecast-card">
+        <div v-for="(day, index) in forecast" :key="index" class="forecast-card">  
+          <hr>
           <p class="forecast-day">{{ formatDateToDay(day.date) }}</p>
           <p class="forecast-day">{{ day.date }}</p>
-          <img :src="getIconUrl()" alt="Weather Icon" class="forecast-icon" />
+          <img :src="day.icon" alt="Weather Icon" class="forecast-icon" />
           <p class="forecast-temperature">{{ day.temperature }}°C</p>
           <p class="forecast-description">{{ day.description }}</p>
         </div>
       </div>
     </div>
 
-    <router-link to="home" class="back-link">Retour</router-link>
+    <router-link to="/" class="back-link">Retour</router-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import type { StoreState } from '@/types/config';
+import { useStore } from 'vuex';
 
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
@@ -35,8 +38,13 @@ const weather = computed(() => store.getters.weather);
 const forecast = ref<any[]>([]);
 const API_KEY = 'fd08696ce7d247dba7572711243008';
 
+
+
+
 onMounted(async () => {
   if (city.value) {
+    console.log("city",city.value);
+    
     await store.dispatch('fetchWeather', city.value);
     const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
     const data = await response.json();

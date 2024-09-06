@@ -6,24 +6,23 @@
 
     <h2>Ailleurs dans le monde :</h2>
     <div class="weather-list">
-      <WeatherCard
-        v-for="weather in defaultWeathers"
-        :key="city"
-        :city="city"
-        :icon="icon"
-        :temperature="temperature"
-        :description="description"
+      <WeatherCard v-for="w in defaultWeathers"
+      :key="w.city"
+      :city="w.city"
+      :icon="w.icon"
+      :temperature="w.temperature"
+      :description="w.description"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import WeatherCard from '@/WeatherCard.vue';
-import type { Weather } from '@/types/config';
+import WeatherCard from './../components/WeatherCard.vue';
+import type { Weather } from './../types/config';
 
 const router = useRouter();
 const store = useStore();
@@ -36,10 +35,15 @@ const search = () : void => {
   }
 };
 
-const defaultWeathers =  store.getters.defaultWeathers as Weather[];
 onMounted(() => {
   store.dispatch('fetchDefaultWeathers')
 });
+const defaultWeathers =  store.getters.defaultWeathers as Weather[];
+
+
+
+console.log("dw", defaultWeathers);
+
 </script>
 
 <style scoped>

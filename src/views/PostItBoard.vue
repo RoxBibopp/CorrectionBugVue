@@ -12,10 +12,10 @@
       </div>
       <div class="fontPickerCtn">
         <label for="fontFamily">Choisir une police :</label>
-        <FontSelector
-        :fonts="fonts"
-        :selectedFont="selectedFontFamily"
-        :onSelectFont="selectFontFamily"
+        <FrontSelector
+          :fonts="fonts"
+          :selectedFont="selectedFontFamily"
+          :onSelectFont="selectFontFamily"
         />
       </div>
       <button @click="addPostIt">Ajouter un Post-it</button>

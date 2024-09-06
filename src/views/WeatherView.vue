@@ -3,9 +3,9 @@
 
     <div v-if="weather" class="current-weather">
       <h2>Météo à {{ city }}</h2>
-      <img :src="weather.icon" alt="Weather Icon" class="weather-icon" />
-      <p class="temperature">Temperature: {{ weather.temperature }}°C</p>
-      <p class="description">{{ weather.description }}</p>
+      <img :src="weather.current.condition.icon" alt="Weather Icon" class="weather-icon" />
+      <p class="temperature">Temperature: {{ weather.current.temp_c }}°C</p>
+      <p class="description">{{ weather.current.condition.text }}</p>
     </div>
 
     <div v-if="forecast.length" class="forecast">
@@ -14,20 +14,21 @@
         <div v-for="(day, index) in forecast" :key="index" class="forecast-card">
           <p class="forecast-day">{{ formatDateToDay(day.date) }}</p>
           <p class="forecast-day">{{ day.date }}</p>
-          <img :src="getIconUrl()" alt="Weather Icon" class="forecast-icon" />
+          <img :src="getIconUrl(day.icon)" alt="Weather Icon" class="forecast-icon" />
           <p class="forecast-temperature">{{ day.temperature }}°C</p>
           <p class="forecast-description">{{ day.description }}</p>
         </div>
       </div>
     </div>
 
-    <router-link to="home" class="back-link">Retour</router-link>
+    <router-link to="/" class="back-link">Retour</router-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import type { StoreState } from '@/types/config';
+import { useStore } from 'vuex';
 
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
@@ -37,9 +38,18 @@ const API_KEY = 'fd08696ce7d247dba7572711243008';
 
 onMounted(async () => {
   if (city.value) {
-    await store.dispatch('fetchWeather', city.value);
+    /*
+      store dispatch est lancé ici et sur la page précédente
+      en commentant celui de cette page la ville correcte s'affiche
+      mais les prévisions restent sur la ville précédament entrée
+      le local storage est changé sur la page précédente mais ici
+      il contient toujours la valeur précédente
+    */
+    // await store.dispatch('fetchWeather', city.value);   
+    console.log("Local Storage inchangé :",localStorage.city);
     const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
     const data = await response.json();
+    
     forecast.value = data.forecast.forecastday.map((day: any) => ({
       date: day.date,
       temperature: day.day.avgtemp_c,

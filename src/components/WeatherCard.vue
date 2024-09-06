@@ -1,21 +1,21 @@
 <template>
   <div class="weather-card">
-    <h3>{{ city }}</h3>
-    <img :src="icon" alt="Weather Icon" />
-    <p>Temperature: {{ temperature }}°C</p>
-    <p>{{ description }}</p>
+    <h3>{{ weather.city }}</h3>
+    <img :src="weather.icon" alt="Weather Icon" />
+    <p>Temperature: {{ weather.temperature }}°C</p>
+    <p>{{ weather.description }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import type { Weather } from '@/types/config';
 
-const props = defineProps({
-  city: String,
-  icon: String,
-  temperature: Number,
-  description: String
-});
+const props = defineProps<{
+  weather: Weather
+}>();
+
+
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@
 
     <div v-if="weather" class="current-weather">
       <h2>Météo à {{ city }}</h2>
-      <img :src="weather.icon" alt="Weather Icon" class="weather-icon" />
+      <img :src="getIconUrl(weather.icon)" alt="Weather Icon" class="weather-icon" />
       <p class="temperature">Temperature: {{ weather.temperature }}°C</p>
       <p class="description">{{ weather.description }}</p>
     </div>
@@ -14,24 +14,28 @@
         <div v-for="(day, index) in forecast" :key="index" class="forecast-card">
           <p class="forecast-day">{{ formatDateToDay(day.date) }}</p>
           <p class="forecast-day">{{ day.date }}</p>
-          <img :src="getIconUrl()" alt="Weather Icon" class="forecast-icon" />
+          <img :src="getIconUrl(day.icon)" alt="Weather Icon" class="forecast-icon" />
           <p class="forecast-temperature">{{ day.temperature }}°C</p>
           <p class="forecast-description">{{ day.description }}</p>
         </div>
       </div>
     </div>
 
-    <router-link to="home" class="back-link">Retour</router-link>
+    <router-link to="/" class="back-link">Retour</router-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import { useStore } from 'vuex'
 import type { StoreState } from '@/types/config';
 
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
-const weather = computed(() => store.getters.weather);
+const weather = computed(() => {
+  const weatherData =  store.getters.weather
+  console.log(weatherData)
+});
 const forecast = ref<any[]>([]);
 const API_KEY = 'fd08696ce7d247dba7572711243008';
 
@@ -40,6 +44,7 @@ onMounted(async () => {
     await store.dispatch('fetchWeather', city.value);
     const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
     const data = await response.json();
+    
     forecast.value = data.forecast.forecastday.map((day: any) => ({
       date: day.date,
       temperature: day.day.avgtemp_c,
@@ -52,11 +57,11 @@ onMounted(async () => {
 const formatDateToDay = (dateString: string): string => {
   const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
   const date = new Date(dateString);
-  return daysOfWeek[date.getDate()];
+  return daysOfWeek[date.getDay()];
 }
 
 const getIconUrl = (icon?: string): string => {
-  return `https:${icon}`;
+  return `https://${icon}`;
 }
 </script>
 

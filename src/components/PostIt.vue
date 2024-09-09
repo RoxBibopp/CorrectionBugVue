@@ -2,8 +2,8 @@
   <div
     :style="{
       position: 'absolute',
-      top: postIt.x + 'px',
-      left: postIt.y + 'px',
+      top: postIt.y + 'px',
+      left: postIt.x + 'px',
       width: postIt.width + 'px',
       height: postIt.height + 'px',
       backgroundColor: postIt.color,
@@ -76,7 +76,7 @@ const drag = (e: MouseEvent) => {
 };
 
 const stopDrag = () => {
-  isDragging.value = !isDragging.value;
+  isDragging.value = false;
 };
 
 const startResize = (e: MouseEvent) => {

@@ -36,8 +36,8 @@
 import { ref } from 'vue';
 import PostItComponent from '@/components/PostIt.vue';
 import ColorPicker from '@/components/ColorPicker.vue';
-import FrontSelector from '@/components/FontSelector.vue';
 import type { PostIt } from '@/types/config';
+import FontSelector from "@/components/FontSelector.vue";
 
 const postIts = ref<PostIt[]>([]);
 

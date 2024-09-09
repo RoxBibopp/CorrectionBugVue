@@ -1,28 +1,28 @@
 <template>
   <div>
     <h1>Chercher une ville</h1>
-    <input v-model="city" placeholder="Entrez un nom de ville" />
+    <input v-model="city" placeholder="Entrez un nom de ville" @keyup.enter="search"/>
     <button @click="search">Chercher</button>
 
     <h2>Ailleurs dans le monde :</h2>
     <div class="weather-list">
       <WeatherCard
         v-for="weather in defaultWeathers"
-        :key="city"
-        :city="city"
-        :icon="icon"
-        :temperature="temperature"
-        :description="description"
+        :key="weather.city"
+        :city="weather.city"
+        :icon="weather.icon"
+        :temperature="weather.temperature"
+        :description="weather.description"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import WeatherCard from '@/WeatherCard.vue';
+import WeatherCard from '@/components/WeatherCard.vue';
 import type { Weather } from '@/types/config';
 
 const router = useRouter();
@@ -35,8 +35,8 @@ const search = () : void => {
     router.push('/weather');
   }
 };
+const defaultWeathers = computed(() => store.getters.defaultWeathers as Weather[])
 
-const defaultWeathers =  store.getters.defaultWeathers as Weather[];
 onMounted(() => {
   store.dispatch('fetchDefaultWeathers')
 });

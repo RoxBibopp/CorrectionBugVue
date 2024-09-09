@@ -1,5 +1,5 @@
 import { createStore } from 'vuex';
-import type { WeatherState, Weather } from '@/types/config';
+import type { WeatherState, Weather } from '../types/config';
 
 const API_KEY = 'fd08696ce7d247dba7572711243008';
 const API_URL = 'https://api.weatherapi.com/v1/current.json';
@@ -21,6 +21,7 @@ export default createStore<WeatherState>({
     },
     setDefaultWeathers(state, weathers: Weather[]) {
       state.defaultWeathers = weathers;
+      localStorage.setItem('DefaultWeathers', JSON.stringify(weathers));
     }
   },
   actions: {
@@ -40,7 +41,7 @@ export default createStore<WeatherState>({
           icon: `https:${data.current.condition.icon}`
         };
         commit('setCity', city);
-        commit('setWeather', data);
+        commit('setWeather', weatherData);
       } catch (error) {
         console.error('Erreur:', error);
         commit('setWeather', null);

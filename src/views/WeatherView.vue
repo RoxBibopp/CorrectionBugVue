@@ -14,20 +14,22 @@
         <div v-for="(day, index) in forecast" :key="index" class="forecast-card">
           <p class="forecast-day">{{ formatDateToDay(day.date) }}</p>
           <p class="forecast-day">{{ day.date }}</p>
-          <img :src="getIconUrl()" alt="Weather Icon" class="forecast-icon" />
+          <img :src="getIconUrl(day.icon)" alt="Weather Icon" class="forecast-icon" />
           <p class="forecast-temperature">{{ day.temperature }}°C</p>
           <p class="forecast-description">{{ day.description }}</p>
         </div>
       </div>
     </div>
 
-    <router-link to="home" class="back-link">Retour</router-link>
+    <router-link to="/" class="back-link">Retour</router-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import type { StoreState } from '@/types/config';
+import {useStore} from 'vuex';
+import { icon } from 'leaflet';
 
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
@@ -52,10 +54,10 @@ onMounted(async () => {
 const formatDateToDay = (dateString: string): string => {
   const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
   const date = new Date(dateString);
-  return daysOfWeek[date.getDate()];
+  return daysOfWeek[date.getDay()];
 }
 
-const getIconUrl = (icon?: string): string => {
+const getIconUrl = (icon: string): string => {
   return `https:${icon}`;
 }
 </script>

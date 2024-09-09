@@ -1,7 +1,7 @@
 <template>
   <div class="weather-card">
     <h3>{{ city }}</h3>
-    <img :src="icon" alt="Weather Icon" />
+    <img :src=" icon "  alt="Weather Icon" />
     <p>Temperature: {{ temperature }}°C</p>
     <p>{{ description }}</p>
   </div>

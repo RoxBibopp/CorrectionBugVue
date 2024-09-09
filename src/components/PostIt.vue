@@ -80,7 +80,9 @@ const drag = (e: MouseEvent) => {
 
 
 const stopDrag = () => {
+  
   isDragging.value = false;
+  console.log(isDragging);
 };
 
 const startResize = (e: MouseEvent) => {

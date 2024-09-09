@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import WeatherCard from './../components/WeatherCard.vue';
@@ -38,7 +38,7 @@ const search = () : void => {
 onMounted(() => {
   store.dispatch('fetchDefaultWeathers')
 });
-const defaultWeathers =  store.getters.defaultWeathers as Weather[];
+const defaultWeathers = computed(() => store.getters.defaultWeathers as Weather[]);
 
 
 

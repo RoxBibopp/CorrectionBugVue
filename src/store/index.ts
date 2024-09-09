@@ -8,7 +8,7 @@ export default createStore<WeatherState>({
   state: {
     city: localStorage.getItem('city') || '',
     weather: JSON.parse(localStorage.getItem('weather') || 'null'),
-    defaultWeathers: [] as Weather[], //ajout as Weather[] pour que defaultWeathers: [] est traité comme un tableu d'objet Weather
+    defaultWeathers: [] 
   },
   mutations: {
     setCity(state, city: string) {
@@ -40,7 +40,7 @@ export default createStore<WeatherState>({
           icon: `https:${data.current.condition.icon}`
         };
         commit('setCity', city);
-        commit('setWeather', data);
+        commit('setWeather', weatherData);
       } catch (error) {
         console.error('Erreur:', error);
         commit('setWeather', null);

@@ -99,6 +99,7 @@ const stopResize = () => {
   isResizing.value = false;
 };
 
+
 onMounted(() => {
   window.addEventListener('mousemove', drag);
   window.addEventListener('mouseup', stopDrag);

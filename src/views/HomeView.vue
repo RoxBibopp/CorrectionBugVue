@@ -22,19 +22,24 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import WeatherCard from '@/components/WeatherCard.vue';
+import WeatherCard from '../components/WeatherCard.vue';
 import type { Weather } from '@/types/config';
 
 const router = useRouter();
 const store = useStore();
 const city = ref<string>('');
 
-const search = () : void => {
+const search = async () : Promise<void> => {
   if (city.value.trim() !== '') {
-    store.dispatch('fetchWeather', city.value);
-    router.push('/weather');
+    try {
+      await store.dispatch('fetchWeather', city.value);
+      router.push('/weather');
+    } catch (error) {
+      console.error('Erreur lors de la recherche:', error);
+    }
   }
 };
+
 
 const defaultWeathers =  computed(() => store.getters.defaultWeathers as Weather[]); //ajout de computed pour obtenir les données du store
 console.log('defaultWeathers:', defaultWeathers);

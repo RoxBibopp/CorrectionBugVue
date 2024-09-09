@@ -34,13 +34,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import PostItComponent from '@/components/PostIt.vue';
-import ColorPicker from '@/components/ColorPicker.vue';
-import FontSelector from '@/components/FontSelector.vue';
+import PostItComponent from '../components/PostIt.vue';
+import ColorPicker from '../components/ColorPicker.vue';
+import FontSelector from '../components/FontSelector.vue';
 import type { PostIt } from '@/types/config';
 
 const postIts = ref<PostIt[]>([]);
-
 let nextId = 1;
 
 const board = ref<HTMLElement | null>(null);

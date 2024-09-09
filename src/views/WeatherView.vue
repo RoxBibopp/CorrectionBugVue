@@ -34,7 +34,7 @@ import { useRouter } from 'vue-router'; // import { useRouter } from 'vue-router
 const router = useRouter();
 const store = useStore<StoreState>();
 const city = computed(() => store.getters.city);
-const weather = ref<Weather | null>(null); // ref permet de stocker et de mettre à jour
+const weather = computed(() => store.getters.weather); // ref permet de stocker et de mettre à jour
 const forecast = ref<any[]>([]);
 const API_KEY = 'fd08696ce7d247dba7572711243008';
 
@@ -46,14 +46,7 @@ onMounted(async () => {
       const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city.value}&days=7&lang=fr`);
       const data = await response.json();
 
-      console.log('Weather Data:', data); // Pour déboguer
-
-      weather.value = {
-        city: data.location.name,
-        temperature: data.current.temp_c, // stocker les données de weathersvinformations obtenu de l'Api
-        description: data.current.condition.text,
-        icon: `https:${data.current.condition.icon}`
-      };
+      console.log('Weather Data:', data); // Pour débogue
       
       forecast.value = data.forecast.forecastday.map((day: any) => ({
         date: day.date,
@@ -73,7 +66,7 @@ const formatDateToDay = (dateString: string): string => {
   return daysOfWeek[date.getDay()]; // remplacer getDate par getDay pour retrouver le jour
 }
 
-const getIconUrl = (icon?: string): string => {
+const getIconUrl = (icon: string): string => {
   return `https:${icon}`;
 }
 </script>

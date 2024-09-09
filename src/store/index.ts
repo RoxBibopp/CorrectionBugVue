@@ -33,6 +33,7 @@ export default createStore<WeatherState>({
         }
         const data = await response.json();
         localStorage.setItem('weather', '');
+        // commit servent à appeler les mutations à l'intérieur du store
         commit('setWeather', null);
         const weatherData: Weather = {
           city: data.location.name,

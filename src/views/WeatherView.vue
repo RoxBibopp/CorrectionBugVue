@@ -3,7 +3,7 @@
 
     <div v-if="weather" class="current-weather">
       <h2>Météo à {{ city }}</h2>
-      <img :src="weather.current.condition.icon" alt="Weather Icon" class="weather-icon" />
+      <img :src="weather.icon" alt="Weather Icon" class="weather-icon" />
       <p class="temperature">Temperature: {{ weather.current.temp_c }}°C</p>
       <p class="description">{{ weather.current.condition.text }}</p>
     </div>
@@ -53,10 +53,10 @@ onMounted(async () => {
 const formatDateToDay = (dateString: string): string => {
   const daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
   const date = new Date(dateString);
-  return daysOfWeek[date.getDate()];
+  return daysOfWeek[date.getDay()];
 }
 
-const getIconUrl = (icon?: string): string => {
+const getIconUrl = (icon: string): string => {
   return `https:${icon}`;
 }
 </script>

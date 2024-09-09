@@ -68,6 +68,7 @@ const startDrag = (e: MouseEvent) => {
 const drag = (e: MouseEvent) => {
   if (isDragging.value) {
     props.onUpdate({
+      // ...props.postIt permet de créer un nouveau objet avec toutes les propriétés de postIt et d'ajouter le width et height
       ...props.postIt,
       x: e.clientX - initialPosition.value.x,
       y: e.clientY - initialPosition.value.y,

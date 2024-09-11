@@ -15,8 +15,8 @@
     }"
     @mousedown="startDrag"
     class="postit"
-  >
-  <textarea 
+   >
+   <textarea 
     v-model="postIt.content" 
     style="
       width: 100%; 
@@ -28,7 +28,7 @@
       font-size: inherit; 
       font-weight: inherit; 
       font-style: inherit;"
-  ></textarea>
+   ></textarea>
     <div
       style="
         width: 10px;
